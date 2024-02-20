@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /expense-tracker/
+
+# Rewrite requests to login.php
+RewriteRule ^login$ actions/login.php [L]
+
+# Rewrite requests to register.php
+RewriteRule ^register$ actions/register.php [L]
+
+
+# Rewrite requests to add_expense.php
+RewriteRule ^add_expense$ actions/add_expense.php [L]
