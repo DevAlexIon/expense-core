@@ -22,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $decoded = JWT::decode($token, "my_secret_key_123", array('HS256'));
 
-        if (!isset($data['amount']) || !isset($data['description']) || !isset($data['date'])) {
+        if (!isset($data['amount']) || !isset($data['description']) || !isset($data['category'])) {
             http_response_code(400);
             header('Content-Type: application/json');
-            echo json_encode(array("error" => "Invalid request. Please provide amount, description, and date."));
+            echo json_encode(array("error" => "Invalid request. Please provide amount, description, and category."));
             exit();
         }
 
-        $stmt = $pdo->prepare("INSERT INTO expenses (user_id, amount, description, date) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$decoded->user_id, $data['amount'], $data['description'], $data['date']]);
+        $stmt = $pdo->prepare("INSERT INTO expenses (user_id, amount, description, category) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$decoded->user_id, $data['amount'], $data['description'], $data['category']]);
         $expenseId = $pdo->lastInsertId();
 
         if ($expenseId) {

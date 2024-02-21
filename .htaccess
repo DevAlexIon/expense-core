@@ -7,6 +7,8 @@ RewriteRule ^login$ actions/login.php [L]
 # Rewrite requests to register.php
 RewriteRule ^register$ actions/register.php [L]
 
-
 # Rewrite requests to add_expense.php
 RewriteRule ^add_expense$ actions/add_expense.php [L]
+
+# Rewrite requests to get_expenses.php
+RewriteRule ^get_expenses$ actions/get_expenses.php [L]
