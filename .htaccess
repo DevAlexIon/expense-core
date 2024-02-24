@@ -12,3 +12,9 @@ RewriteRule ^add_expense$ actions/add_expense.php [L]
 
 # Rewrite requests to get_expenses.php
 RewriteRule ^get_expenses$ actions/get_expenses.php [L]
+
+# Rewrite requests to get_expenses.php
+RewriteRule ^delete_expense$ actions/delete_expense.php [L]
+
+# Rewrite requests to get_expenses.php
+RewriteRule ^edit_expense$ actions/edit_expense.php [L]
