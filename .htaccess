@@ -18,3 +18,9 @@ RewriteRule ^delete_expense$ actions/delete_expense.php [L]
 
 # Rewrite requests to get_expenses.php
 RewriteRule ^edit_expense$ actions/edit_expense.php [L]
+
+# Rewrite requests to get_expenses.php
+RewriteRule ^add-balance$ actions/add-balance.php [L]
+
+# Rewrite requests to get_expenses.php
+RewriteRule ^add-income$ actions/add-income.php [L]

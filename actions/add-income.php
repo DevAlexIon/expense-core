@@ -6,7 +6,7 @@ use Firebase\JWT\JWT;
 
 include '../includes/db.php';
 
-$validCategories = array('Food', 'Transport', 'Utilities', 'Entertainment', 'Other');
+$validCategories = array('Salary', 'Bonus', 'Investment', 'Rent', 'Other');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
@@ -39,29 +39,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        $stmt = $pdo->prepare('UPDATE users SET balance = balance - ? WHERE id = ?');
+        $stmt = $pdo->prepare('UPDATE users SET balance = balance + ? WHERE id =?');
         $stmt->execute([$data['amount'], $user_id]);
 
         if($stmt->rowCount() > 0) {
-            $stmt = $pdo->prepare('INSERT INTO expenses (user_id, amount, description, category) VALUES (?, ?, ?, ?)');
+            $stmt = $pdo->prepare('INSERT INTO income (user_id, amount, description, category) VALUES (?, ?, ?, ?)');
             $stmt->execute([$user_id, $data['amount'], $data['description'], $data['category']]);
             http_response_code(201);
             header('Content-Type: application/json');
-            echo json_encode(array("success" => true, "message" => "Expense added successfully."));
+            echo json_encode(array("success" => true, "message" => "Income added successfully!"));
         } else {
             http_response_code(500);
             header('Content-Type: application/json');
-            echo json_encode(array("error" => "Failed to update user balance."));
+            echo json_encode(array("error" => "Failed to update the user balance."));
         }
     } catch (Exception $e) {
         http_response_code(401);
         header('Content-Type: application/json');
         echo json_encode(array("error" => "Invalid or expired token"));
+        }
+    } else {
+        http_response_code(405);
+        header('Content-Type: application/json');
+        echo json_encode(array("error" => "Method Not Allowed"));
     }
-} else {
-    http_response_code(405);
-    header('Content-Type: application/json');
-    echo json_encode(array("error" => "Method Not Allowed"));
-}
 
 ?>
