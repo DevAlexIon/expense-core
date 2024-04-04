@@ -3,7 +3,7 @@
 $dbHost = 'localhost';
 $dbUsername = 'root';
 $dbPassword = '';
-$dbName = 'expense-tracker';
+$dbName = 'expense-core';
 
 $mysqli = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
 

@@ -4,9 +4,11 @@ include '../includes/db.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $username = $data['username'];
+    $email = $data['email'];
+    $password = $data['password'];
 
     if(empty($username) || empty($email) || empty($password)) {
         $response = array("success" => false, "message" => "All fields are required");
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
             $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
             $stmt->execute([$username, $email, $hashedPassword]);
-            $response = array("success" => true, "message" => "Registration successful. You can now login.");
+            $response = array("success" => true, "message" => "Registration successful");
         }
     }
 
