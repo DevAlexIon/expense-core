@@ -8,10 +8,14 @@ include '../includes/db.php';
 
 session_start();
 
+$inputJSON = file_get_contents('php://input');
+
+$input = json_decode($inputJSON, true);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['email']) && isset($_POST['password'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+    if (isset($input['email']) && isset($input['password'])) {
+        $email = $input['email'];
+        $password = $input['password'];
 
         if (empty($email) || empty($password)) {
             $response = array("error" => "Email and password are required");
@@ -33,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'issued_at' => $issued_at,
                         'expiration_time' => $expiration_time
                     );
-                    $jwt = JWT::encode($payload, $secret_key);
+                    $jwt = JWT::encode($payload, $secret_key, 'HS256');
 
                     $response = array(
                         "success" => true,
